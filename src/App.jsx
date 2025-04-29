@@ -15,11 +15,11 @@ function App() {
     <NavigationBar />
     <Router>
       <Routes>
-        <Route path="/homepage" element={Home} />
+        <Route path="/" element={<Home />} />
         <Route path ="/products" element={<ProductList /> } />
         <Route path ="/products/:id" element={<ProductDetails /> } />
         <Route path ="/addproduct" element={<AddProduct/> } />
-        <Route path ="/editproduct" element={<EditProduct/> } />
+        <Route path ="/editproduct/:id" element={<EditProduct/> } />
       </Routes>
     </Router>
     </>

@@ -1,53 +1,49 @@
-import React, {useEffect} from 'react'
-import Container from 'react-bootstrap/Container'
-import Row from 'react-bootstrap/Row'
-import Col from 'react-bootstrap/Col'
-import Card from 'react-bootstrap/Card'
-import axios from 'axios'
-import { Link } from 'react-router-dom'
+import React, { useEffect, useState } from 'react';
+import { Container, Row, Col, Card } from 'react-bootstrap';
+import axios from 'axios';
+import { Link } from 'react-router-dom';
+
 const ProductList = () => {
-    const [products, setProducts] = React.useState([])
-    const [loading, setLoading] = React.useState(true)
-    const [error, setError] = React.useState(null)
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-useEffect(() => {
+  useEffect(() => {
     axios.get('https://fakestoreapi.com/products')
-    .then((response) => {
-        setProducts(response.data)
-        setLoading(false)
-    })
-    .catch((error) => {
-        setError(error)
-        setLoading(false)
-    })
-}, [])
+      .then((response) => {
+        setProducts(response.data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        setError(error);
+        setLoading(false);
+      });
+  }, []);
 
-if (loading) return <div>Loading...</div>
-if (error) return <div>Error: {error.message}</div>
-if (!products || products.length === 0) return <div>No products found</div>
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>Error: {error.message}</div>;
+  if (!products || products.length === 0) return <div>No products found</div>;
 
   return (
-    <Container> 
-        <h1>ProductList</h1>
-        <Row>
+    <Container>
+      <h1>Product List</h1>
+      <Row>
         {products.map((product) => (
-            <Col key={product.id}>
-                <Card>
-                    <Card.Img  src={product.image} width={20} alt={product.title} />
-                    <Card.Body>
-                        <Card.Title>
-                            <Link to={`/products/${product.id}`}>{product.title}</Link>
-                        </Card.Title>
-                        <Card.Text>{product.description}</Card.Text>
-                    </Card.Body>
-                </Card>
-            </Col>
+          <Col key={product.id} xs={12} sm={6} md={4} lg={3} xl={3}>
+            <Card>
+              <Card.Img variant="top" src={product.image} alt={product.title} />
+              <Card.Body>
+                <Card.Title>
+                  <Link to={`/products/${product.id}`}>{product.title}</Link>
+                </Card.Title>
+                <Card.Text>{product.description}</Card.Text>
+              </Card.Body>
+            </Card>
+          </Col>
         ))}
-        </Row>
+      </Row>
     </Container>
-        
-     
-  )
-}
+  );
+};
 
-export default ProductList
+export default ProductList;
